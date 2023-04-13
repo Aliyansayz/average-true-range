@@ -1,3 +1,11 @@
+import pandas as pd
+import numpy as np
+""" 
+## Example 
+bar = yfinance or inclusive bar["High"]  bar["Low"] bar["Close"] 
+upper_band , lower_band   =   atr_bands( bar , multiplier =1.7 , period = 3   ) 
+"""
+
 def sma (array, period ):
 
     sma = np.empty_like(array)
@@ -7,7 +15,7 @@ def sma (array, period ):
           sma[i-1] = np.mean(array[i-period:i] , dtype=np.float16)
     return sma 
      
-def  atr_bands( bar , multiplier ):
+def  atr_bands( bar , multiplier  , period ):
 
   close = np.array( bars["Close"] ,dtype=np.float16  )
   # multiplier = 2.0 
@@ -16,7 +24,7 @@ def  atr_bands( bar , multiplier ):
     np.array(abs(bars["Low"]-bars["Close"].shift() ),dtype=np.float16 )
     
   true_range = np.amax (np.hstack( (high_low, high_close, low_close) ).reshape(-1,3),axis=1 )
-  avg_true_range = sma(true_range , window_size=14)  # takes average for 14 period  
+  avg_true_range = sma(true_range , period )  # takes average for 14 period  
 
   upper_band =   close + (multiplier * avg_true_range)
   lower_band =   close - (multiplier * avg_true_range)  
