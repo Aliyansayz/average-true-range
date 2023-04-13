@@ -1,4 +1,5 @@
-
+import pandas as pd
+import numpy as np
 """ 
 ## Example 
 bar = yfinance or inclusive bar["High"]  bar["Low"] bar["Close"] 
