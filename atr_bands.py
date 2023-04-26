@@ -24,6 +24,8 @@ def  atr_bands( bar , multiplier  , period ):
     np.array(abs(bars["Low"]-bars["Close"].shift() ),dtype=np.float16 )
     
   true_range = np.amax (np.hstack( (high_low, high_close, low_close) ).reshape(-1,3),axis=1 )
+  true_range = np.nan_to_num(true_range , nan=0) 
+    
   avg_true_range = sma(true_range , period )  # takes average for 14 period  
 
   upper_band =   close + (multiplier * avg_true_range)
