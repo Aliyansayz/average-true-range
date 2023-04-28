@@ -18,7 +18,7 @@ def plot_candles_atr(bar , index=None):
   
   fig.add_scatter( name="upper_band" ,x=bar.index.values  , y=bar['upper_band'], mode='lines' , line=dict(color='yellow', width=1.5))
 
-  fig.add_scatter( name="lower_band" ,x=bars.index.values  , y=bar['lower_band'], mode='lines' , line=dict(color='yellow', width=1.5))
+  fig.add_scatter( name="lower_band" ,x=bar.index.values  , y=bar['lower_band'], mode='lines' , line=dict(color='yellow', width=1.5))
 
 
   # fig.add_scatter( name="Average_True_Range" , x=bars.index.values  , y=bars['Average_True_Range'], mode='lines' , line=dict(color='yellow', width=1.5) )
