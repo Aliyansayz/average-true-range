@@ -14,7 +14,21 @@ def sma (array, period ):
     for i in range(period, len(array)+1 ):
           sma[i-1] = np.mean(array[i-period:i] , dtype=np.float16)
     return sma 
-     
+
+  def smoothed(self, array, period , alpha = None):
+    
+    ema = np.empty_like(array)
+    ema = np.full( ema.shape , np.nan)
+    ema[0] = np.mean(array[0] , dtype=np.float16)
+    if alpha == None:
+      alpha = 1 / ( period )
+
+    for i in range(1 , len(array) ):
+          ema[i] = np.array( (array[i] * alpha +  ema[i-1]  * (1-alpha) ) , dtype=np.float16 )
+            
+    ema =  np.nan_to_num(ema , nan=0)
+    return ema 
+
 def  atr_bands( bar , multiplier  , period ):
 
   close = np.array( bars["Close"] ,dtype=np.float16  )
@@ -28,7 +42,7 @@ def  atr_bands( bar , multiplier  , period ):
     
   avg_true_range = sma(true_range , period )  # takes average for 14 period  
 
-  upper_band =   close + (multiplier * avg_true_range)
-  lower_band =   close - (multiplier * avg_true_range)  
+  upper_band =   smoothed( close, 3)   + (multiplier * avg_true_range)
+  lower_band =   smoothed( close, 3)  - (multiplier * avg_true_range)  
 
   return  upper_band , lower_band
